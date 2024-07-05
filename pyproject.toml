@@ -1,0 +1,91 @@
+[tool.poetry]
+authors = ["Chris Gregory <christopher.b.gregory@gmail.com>"]
+classifiers = [
+    "Intended Audience :: Developers",
+    "Topic :: Software Development",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3.12",
+]
+description = "API for identifier tracing."
+keywords = ["api", "tracing", "identifier", "uuid", "trace", "id"]
+license = "Apache Software License"
+name = "idtrace"
+readme = "README.md"
+repository = "https://github.com/gregorybchris/idtrace"
+version = "0.1.0"
+
+[[tool.poetry.packages]]
+include = "idtrace"
+
+[tool.poetry.dependencies]
+click = "^8.1.0"
+fastapi = "^0.111.0"
+pydantic = "^2.8.0"
+python = ">=3.12"
+
+[tool.poetry.group.dev.dependencies]
+mypy = "^1.10.0"
+pytest = "^8.2.0"
+ruff = "^0.5.0"
+semver = "^3.0.0"
+
+[tool.poetry.scripts]
+idtrace = "idtrace.cli.cli:main"
+
+[build-system]
+build-backend = "poetry.core.masonry.api"
+requires = ["poetry-core>=1.0.0"]
+
+[tool.mypy]
+disallow_incomplete_defs = true
+disallow_untyped_calls = true
+disallow_untyped_defs = true
+ignore_missing_imports = true
+
+[tool.ruff]
+line-length = 120
+src = ["idtrace"]
+
+[tool.ruff.lint]
+ignore = ["B008", "D100", "D104", "FIX002", "TD003"]
+select = [
+    "A",
+    "ARG",
+    "B",
+    "BLE",
+    "C4",
+    "D",
+    "E",
+    "EM",
+    "ERA",
+    "F",
+    "FIX",
+    "G",
+    "I",
+    "ICN",
+    "ISC",
+    "LOG",
+    "N",
+    "PL",
+    "PT",
+    "PTH",
+    "PLR",
+    "RET",
+    "RUF",
+    "SIM",
+    "SLF",
+    "T20",
+    "TCH",
+    "TD",
+    "TID",
+    "W",
+]
+
+[tool.ruff.lint.pycodestyle]
+max-line-length = 120
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.lint.extend-per-file-ignores]
+"**/tests/**/*.py" = ["D", "SLF"]
