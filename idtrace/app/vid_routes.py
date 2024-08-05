@@ -21,12 +21,10 @@ router = APIRouter(tags=["vids"])
 
 
 @router.post("/users/{user_id}/item/{item_id}/vid")
-async def create_vid(user_id: UUID, item_id: UUID) -> VidModel:
+async def post_vid(user_id: UUID, item_id: UUID) -> VidModel:
     """Create a new VID associating an item with a specific user."""
-    vid = uuid.uuid4()
-    vid_model = VidModel(user_id=user_id, item_id=item_id, vid=vid)
-
-    return vid_model
+    vid_id = uuid.uuid4()
+    return VidModel(id=vid_id, user_id=user_id, item_id=item_id)
 
 
 @router.get("/users/{user_id}/item/{item_id}/vid")
