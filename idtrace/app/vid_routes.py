@@ -4,7 +4,9 @@ from typing import Iterable, Optional
 from uuid import UUID
 
 from fastapi import APIRouter, HTTPException
+from sqlmodel import Session, select
 
+from idtrace.app.db import DbDependency
 from idtrace.app.vid_model import VidModel
 
 logger = logging.getLogger(__name__)
@@ -12,44 +14,46 @@ logger = logging.getLogger(__name__)
 router = APIRouter(tags=["vids"])
 
 
-# async def app_state_dep() -> AppState:
-#     """Application state dependency."""
-#     return AppState.get()
-
-
-# AppStateDep = Annotated[AppState, Depends(app_state_dep)]
-
-
 @router.post("/users/{user_id}/item/{item_id}/vid")
-async def post_vid(user_id: UUID, item_id: UUID) -> VidModel:
+async def post_vid(user_id: UUID, item_id: UUID, db: DbDependency) -> VidModel:
     """Create a new VID associating an item with a specific user."""
     vid_id = uuid.uuid4()
-    return VidModel(id=vid_id, user_id=user_id, item_id=item_id)
+    vid = VidModel(id=vid_id, user_id=user_id, item_id=item_id)
+
+    with Session(db.engine) as session:
+        session.add(vid)
+        session.commit()
+        session.refresh(vid)
+
+    return vid
 
 
 @router.get("/users/{user_id}/item/{item_id}/vid")
-async def get_vid(_user_id: UUID, _item_id: UUID) -> Optional[VidModel]:
+async def get_vid(user_id: UUID, item_id: UUID, db: DbDependency) -> Optional[VidModel]:
     """Get VID for a user and item."""
-    # TODO(chris): pull VID from database
-    raise HTTPException(status_code=404, detail="VID not found")
+    with Session(db.engine) as session:
+        vid = session.exec(select(VidModel).where(VidModel.user_id == user_id, VidModel.item_id == item_id)).first()
+        if vid is None:
+            raise HTTPException(status_code=404, detail="VID not found")
+        return vid
 
 
 @router.get("/vids")
-async def get_vids() -> Iterable[VidModel]:
+async def get_vids(db: DbDependency) -> Iterable[VidModel]:
     """List all VIDs."""
-    # TODO(chris): pull VIDs from database
-    return []
+    with Session(db.engine) as session:
+        return session.exec(select(VidModel)).all()
 
 
 @router.get("/users/{user_id}/vids")
-async def get_user_vids(user_id: UUID) -> Iterable[VidModel]:
+async def get_user_vids(user_id: UUID, db: DbDependency) -> Iterable[VidModel]:
     """List VIDs for a user."""
-    # TODO(chris): Pull VIDs from database
-    raise HTTPException(status_code=404, detail=f"User {user_id} not found")
+    with Session(db.engine) as session:
+        return session.exec(select(VidModel).where(VidModel.user_id == user_id)).all()
 
 
 @router.get("/items/{item_id}/vids")
-async def get_item_vids(item_id: UUID) -> Iterable[VidModel]:
+async def get_item_vids(item_id: UUID, db: DbDependency) -> Iterable[VidModel]:
     """List VIDs for an item."""
-    # TODO(chris): Pull VIDs from database
-    raise HTTPException(status_code=404, detail=f"Item {item_id} not found")
+    with Session(db.engine) as session:
+        return session.exec(select(VidModel).where(VidModel.item_id == item_id)).all()

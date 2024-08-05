@@ -50,3 +50,6 @@ dmypy.json
 
 # Other
 .DS_Store
+
+# Database
+database.db

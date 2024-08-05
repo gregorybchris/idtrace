@@ -1,11 +1,11 @@
 from uuid import UUID, uuid4
 
-from pydantic import BaseModel, Field
+from sqlmodel import Field, SQLModel
 
 
-class VidModel(BaseModel):
+class VidModel(SQLModel, table=True):
     """A virtual ID associated to an item for a specific user."""
 
-    id: UUID = Field(default_factory=uuid4)
-    user_id: UUID
-    item_id: UUID
+    id: UUID = Field(default_factory=uuid4, primary_key=True)
+    user_id: UUID = Field(index=True)
+    item_id: UUID = Field(index=True)
