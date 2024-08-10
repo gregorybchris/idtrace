@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 router = APIRouter(tags=["vids"])
 
 
-@router.post("/users/{user_id}/item/{item_id}/vid")
+@router.post("/user/{user_id}/item/{item_id}/vid")
 async def post_vid(user_id: UUID, item_id: UUID, db: DbDependency) -> VidModel:
     """Create a new VID associating an item with a specific user."""
     vid_id = uuid.uuid4()
@@ -28,7 +28,7 @@ async def post_vid(user_id: UUID, item_id: UUID, db: DbDependency) -> VidModel:
     return vid
 
 
-@router.get("/users/{user_id}/item/{item_id}/vid")
+@router.get("/user/{user_id}/item/{item_id}/vid")
 async def get_vid(user_id: UUID, item_id: UUID, db: DbDependency) -> Optional[VidModel]:
     """Get VID for a user and item."""
     with Session(db.engine) as session:
@@ -38,7 +38,7 @@ async def get_vid(user_id: UUID, item_id: UUID, db: DbDependency) -> Optional[Vi
         return vid
 
 
-@router.delete("/users/{user_id}/item/{item_id}/vid")
+@router.delete("/user/{user_id}/item/{item_id}/vid")
 async def delete_vid(user_id: UUID, item_id: UUID, db: DbDependency) -> Optional[VidModel]:
     """Delete VID for a user and item."""
     with Session(db.engine) as session:
@@ -57,14 +57,14 @@ async def get_vids(db: DbDependency) -> Iterable[VidModel]:
         return session.exec(select(VidModel)).all()
 
 
-@router.get("/users/{user_id}/vids")
+@router.get("/user/{user_id}/vids")
 async def get_user_vids(user_id: UUID, db: DbDependency) -> Iterable[VidModel]:
     """List VIDs for a user."""
     with Session(db.engine) as session:
         return session.exec(select(VidModel).where(VidModel.user_id == user_id)).all()
 
 
-@router.get("/items/{item_id}/vids")
+@router.get("/item/{item_id}/vids")
 async def get_item_vids(item_id: UUID, db: DbDependency) -> Iterable[VidModel]:
     """List VIDs for an item."""
     with Session(db.engine) as session:
