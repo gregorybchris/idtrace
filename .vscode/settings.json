@@ -1,11 +1,16 @@
 {
+  "[html]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "[json]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
   "[markdown]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
   "[python]": { "editor.defaultFormatter": "charliermarsh.ruff" },
   "[toml]": { "editor.defaultFormatter": "tamasfe.even-better-toml" },
+  "[typescript]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "[typescriptreact]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
   "editor.codeActionsOnSave": {
     "source.organizeImports": "explicit",
     "source.fixAll": "explicit"
   },
+  "cSpell.words": ["fftpack", "idtrace"],
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.detectIndentation": true,
   "editor.formatOnSave": true,
@@ -15,7 +20,6 @@
   "prettier.printWidth": 120,
   "ruff.format.args": ["--config", "pyproject.toml"],
   "ruff.nativeServer": true,
-  "cSpell.words": ["fftpack", "idtrace"],
   "python.testing.pytestArgs": ["tests"],
   "python.testing.unittestEnabled": false,
   "python.testing.pytestEnabled": true
