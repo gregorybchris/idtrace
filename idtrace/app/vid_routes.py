@@ -38,6 +38,18 @@ async def get_vid(user_id: UUID, item_id: UUID, db: DbDependency) -> Optional[Vi
         return vid
 
 
+@router.delete("/users/{user_id}/item/{item_id}/vid")
+async def delete_vid(user_id: UUID, item_id: UUID, db: DbDependency) -> Optional[VidModel]:
+    """Delete VID for a user and item."""
+    with Session(db.engine) as session:
+        vid = session.exec(select(VidModel).where(VidModel.user_id == user_id, VidModel.item_id == item_id)).first()
+        if vid is None:
+            raise HTTPException(status_code=404, detail="VID not found")
+        session.delete(vid)
+        session.commit()
+        return vid
+
+
 @router.get("/vids")
 async def get_vids(db: DbDependency) -> Iterable[VidModel]:
     """List all VIDs."""
