@@ -6,7 +6,7 @@ import { ObjectCard } from "./object-card";
 type ObjectSelectorProps = {
   title: string;
   objects: Object[];
-  selectedObject: Nullable<Object>;
+  currentObject: Nullable<Object>;
   onSelect: (object: Nullable<Object>) => void;
   onDelete: (object: Object) => void;
   onAdd: () => void;
@@ -15,13 +15,13 @@ type ObjectSelectorProps = {
 export function ObjectSelector({
   title,
   objects,
-  selectedObject,
+  currentObject,
   onSelect,
   onDelete,
   onAdd,
 }: ObjectSelectorProps) {
   function onSelectObject(object: Object) {
-    if (selectedObject !== null && object.id === selectedObject.id) {
+    if (currentObject !== null && object.id === currentObject.id) {
       onSelect(null);
     } else {
       onSelect(object);
@@ -37,8 +37,8 @@ export function ObjectSelector({
             <div key={object.id}>
               <ObjectCard
                 object={object}
-                selected={
-                  selectedObject !== null && object.id === selectedObject.id
+                current={
+                  currentObject !== null && object.id === currentObject.id
                 }
                 onSelect={() => onSelectObject(object)}
                 onDelete={() => onDelete(object)}

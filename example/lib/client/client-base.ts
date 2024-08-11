@@ -1,3 +1,5 @@
+import camelcaseKeys from "camelcase-keys";
+
 export class ClientBase {
   apiBaseUrl: string;
 
@@ -15,7 +17,8 @@ export class ClientBase {
       headers: { "Content-Type": "application/json" },
     });
     await this.throwOnError(response);
-    return await response.json();
+    const responseJson = await response.json();
+    return this.toCamel(responseJson);
   }
 
   async post<ReqT, ResT>(path: string, body: ReqT): Promise<ResT> {
@@ -26,7 +29,8 @@ export class ClientBase {
     });
 
     await this.throwOnError(response);
-    return await response.json();
+    const responseJson = await response.json();
+    return this.toCamel(responseJson);
   }
 
   async delete<ResT>(path: string): Promise<ResT> {
@@ -35,7 +39,8 @@ export class ClientBase {
       headers: { "Content-Type": "application/json" },
     });
     await this.throwOnError(response);
-    return await response.json();
+    const responseJson = await response.json();
+    return this.toCamel(responseJson);
   }
 
   async throwOnError(response: Response): Promise<void> {
@@ -44,5 +49,9 @@ export class ClientBase {
       console.error(responseJson);
       throw Error(JSON.stringify(responseJson));
     }
+  }
+
+  toCamel(obj: any): any {
+    return camelcaseKeys(obj);
   }
 }

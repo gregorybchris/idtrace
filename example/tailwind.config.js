@@ -8,6 +8,7 @@ module.exports = {
     fontFamily: {
       manrope: ["Manrope Variable"],
       work: ["Work Sans Variable"],
+      "geist-mono": ["Geist Mono"],
     },
     extend: {
       colors: {},
