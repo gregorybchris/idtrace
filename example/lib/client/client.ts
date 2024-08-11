@@ -27,8 +27,12 @@ export class Client extends ClientBase {
     return await this.delete(`/user/${userId}/item/${itemId}/vid`);
   }
 
-  async getVids(): Promise<GetVidsResponse> {
+  async getAllVids(): Promise<GetVidsResponse> {
     return await this.get(`/vids`);
+  }
+
+  async getVids(userId: string, itemId: string): Promise<GetVidsResponse> {
+    return await this.get(`/user/${userId}/item/${itemId}/vids`);
   }
 
   async getUserVids(userId: string): Promise<GetUserVidsResponse> {

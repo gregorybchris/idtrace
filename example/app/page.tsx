@@ -27,13 +27,30 @@ export default function HomePage() {
 
   useEffect(() => {
     fetchVids();
-  }, []);
+  }, [currentUser, currentItem]);
 
   function fetchVids() {
-    client.current.getVids().then((vids) => {
-      console.log("Fetched VIDs: ", vids);
-      setVids(vids);
-    });
+    if (currentUser === null && currentItem === null) {
+      client.current.getAllVids().then((vids) => {
+        console.log("Fetched VIDs: ", vids);
+        setVids(vids);
+      });
+    } else if (currentUser !== null && currentItem === null) {
+      client.current.getUserVids(currentUser.id).then((vids) => {
+        console.log("Fetched VIDs: ", vids);
+        setVids(vids);
+      });
+    } else if (currentUser === null && currentItem !== null) {
+      client.current.getItemVids(currentItem.id).then((vids) => {
+        console.log("Fetched VIDs: ", vids);
+        setVids(vids);
+      });
+    } else if (currentUser !== null && currentItem !== null) {
+      client.current.getVids(currentUser.id, currentItem.id).then((vids) => {
+        console.log("Fetched VIDs: ", vids);
+        setVids(vids);
+      });
+    }
   }
 
   function addUser(user: User) {

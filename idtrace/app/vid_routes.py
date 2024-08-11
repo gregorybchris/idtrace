@@ -51,10 +51,17 @@ def delete_vid(user_id: UUID, item_id: UUID, db: DbDependency) -> Optional[VidMo
 
 
 @router.get("/vids")
-def get_vids(db: DbDependency) -> Iterable[VidModel]:
+def get_all_vids(db: DbDependency) -> Iterable[VidModel]:
     """List all VIDs."""
     with Session(db.engine) as session:
         return session.exec(select(VidModel)).all()
+
+
+@router.get("/user/{user_id}/item/{item_id}/vids")
+def get_vids(user_id: UUID, item_id: UUID, db: DbDependency) -> Iterable[VidModel]:
+    """List VIDs for a user and item."""
+    with Session(db.engine) as session:
+        return session.exec(select(VidModel).where(VidModel.user_id == user_id, VidModel.item_id == item_id)).all()
 
 
 @router.get("/user/{user_id}/vids")
