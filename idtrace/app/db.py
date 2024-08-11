@@ -13,7 +13,7 @@ class Db:
     engine: Engine
 
 
-async def db_dependency() -> Db:
+def db_dependency() -> Db:
     """Database dependency.
 
     Returns:
