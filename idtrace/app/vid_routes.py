@@ -15,7 +15,7 @@ router = APIRouter(tags=["vids"])
 
 
 @router.post("/user/{user_id}/item/{item_id}/vid")
-async def post_vid(user_id: UUID, item_id: UUID, db: DbDependency) -> VidModel:
+def post_vid(user_id: UUID, item_id: UUID, db: DbDependency) -> VidModel:
     """Create a new VID associating an item with a specific user."""
     vid_id = uuid.uuid4()
     vid = VidModel(id=vid_id, user_id=user_id, item_id=item_id)
@@ -29,7 +29,7 @@ async def post_vid(user_id: UUID, item_id: UUID, db: DbDependency) -> VidModel:
 
 
 @router.get("/user/{user_id}/item/{item_id}/vid")
-async def get_vid(user_id: UUID, item_id: UUID, db: DbDependency) -> Optional[VidModel]:
+def get_vid(user_id: UUID, item_id: UUID, db: DbDependency) -> Optional[VidModel]:
     """Get VID for a user and item."""
     with Session(db.engine) as session:
         vid = session.exec(select(VidModel).where(VidModel.user_id == user_id, VidModel.item_id == item_id)).first()
@@ -39,7 +39,7 @@ async def get_vid(user_id: UUID, item_id: UUID, db: DbDependency) -> Optional[Vi
 
 
 @router.delete("/user/{user_id}/item/{item_id}/vid")
-async def delete_vid(user_id: UUID, item_id: UUID, db: DbDependency) -> Optional[VidModel]:
+def delete_vid(user_id: UUID, item_id: UUID, db: DbDependency) -> Optional[VidModel]:
     """Delete VID for a user and item."""
     with Session(db.engine) as session:
         vid = session.exec(select(VidModel).where(VidModel.user_id == user_id, VidModel.item_id == item_id)).first()
@@ -51,21 +51,21 @@ async def delete_vid(user_id: UUID, item_id: UUID, db: DbDependency) -> Optional
 
 
 @router.get("/vids")
-async def get_vids(db: DbDependency) -> Iterable[VidModel]:
+def get_vids(db: DbDependency) -> Iterable[VidModel]:
     """List all VIDs."""
     with Session(db.engine) as session:
         return session.exec(select(VidModel)).all()
 
 
 @router.get("/user/{user_id}/vids")
-async def get_user_vids(user_id: UUID, db: DbDependency) -> Iterable[VidModel]:
+def get_user_vids(user_id: UUID, db: DbDependency) -> Iterable[VidModel]:
     """List VIDs for a user."""
     with Session(db.engine) as session:
         return session.exec(select(VidModel).where(VidModel.user_id == user_id)).all()
 
 
 @router.get("/item/{item_id}/vids")
-async def get_item_vids(item_id: UUID, db: DbDependency) -> Iterable[VidModel]:
+def get_item_vids(item_id: UUID, db: DbDependency) -> Iterable[VidModel]:
     """List VIDs for an item."""
     with Session(db.engine) as session:
         return session.exec(select(VidModel).where(VidModel.item_id == item_id)).all()
