@@ -26,12 +26,13 @@ poetry install
 fastapi dev idtrace/app/app.py
 ```
 
-## Usage
-
-```bash
-idtrace run
-```
-
-## Docs
+## API reference
 
 Open [http://0.0.0.0:8000/docs](http://0.0.0.0:8000/docs) after starting up the dev server.
+
+## Frontend example
+
+```bash
+cd example
+pnpm dev
+```
