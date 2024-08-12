@@ -24,12 +24,12 @@ export function CancelButton({
     <div
       className={cn(
         "flex select-none flex-row items-center justify-center rounded-full p-1 transition-all",
-        isEnabled && "cursor-pointer hover:bg-stone-300",
+        isEnabled && "cursor-pointer hover:bg-stone-200",
         className,
       )}
       onClick={handleClick}
     >
-      <XCircle size={20} color="#e96373" weight="duotone" />
+      <XCircle size={20} color="#e06373" weight="duotone" />
     </div>
   );
 }

@@ -118,7 +118,7 @@ export default function HomePage() {
       : items.find((x) => x.id === currentVid.itemId) || null;
 
   return (
-    <div className="flex h-screen bg-stone-100">
+    <div className="flex h-screen bg-stone-100 selection:bg-blue-500 selection:text-stone-100">
       <div className="flex h-screen w-screen flex-col items-center justify-center font-manrope text-stone-800">
         <div>
           {match(mode)

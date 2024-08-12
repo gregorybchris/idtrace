@@ -15,7 +15,7 @@ export function FormButton({ className, text, enabled }: FormButtonProps) {
       className={cn(
         "select-none rounded px-4 py-1 transition-all",
         isEnabled
-          ? "cursor-pointer text-stone-700 hover:bg-stone-300 hover:text-stone-800"
+          ? "cursor-pointer text-stone-700 hover:bg-stone-200 hover:text-stone-800"
           : "text-stone-400",
         className,
       )}

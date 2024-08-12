@@ -19,10 +19,10 @@ export function ObjectCard({
   return (
     <div className="group flex flex-row justify-between gap-1">
       <div
-        className={cn(
-          "flex cursor-pointer flex-col gap-1 rounded px-3 py-2 hover:bg-stone-300",
-          current && "bg-stone-200",
-        )}
+        className={cn("flex cursor-pointer flex-col gap-1 rounded px-3 py-2", {
+          "bg-stone-200 hover:bg-stone-300": current,
+          "hover:bg-stone-200": !current,
+        })}
         onClick={onSelect}
       >
         <div>{object.name}</div>
