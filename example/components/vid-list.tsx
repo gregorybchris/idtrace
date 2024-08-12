@@ -9,9 +9,9 @@ type VidListProps = {
 
 export function VidList({ vids, onDeleteVid, onSelectVid }: VidListProps) {
   return (
-    <div>
+    <div className="flex flex-col gap-3">
       <div className="border-b-2 border-stone-400 text-lg">VIDs</div>
-      <div>
+      <div className="flex flex-col gap-2">
         {vids.map((vid) => (
           <VidCard
             key={vid.id}

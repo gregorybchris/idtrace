@@ -46,7 +46,7 @@ export function ObjectSelector({
             </div>
           ))}
         </div>
-        <AddButton onClick={onAdd} />
+        <AddButton onClick={onAdd} className="rounded" />
       </div>
     </div>
   );

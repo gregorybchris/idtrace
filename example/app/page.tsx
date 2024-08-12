@@ -7,6 +7,7 @@ import { Client } from "@/lib/client/client";
 import { Item } from "@/lib/models/item";
 import { User } from "@/lib/models/user";
 import { Vid } from "@/lib/models/vid";
+import { shortUuid } from "@/lib/utilities/format-utilities";
 import { Nullable } from "@/lib/utilities/type-utilities";
 import { useEffect, useRef, useState } from "react";
 import { match } from "ts-pattern";
@@ -83,6 +84,8 @@ export default function HomePage() {
     client.current.postVid(currentUser.id, currentItem.id).then((vid) => {
       console.log("Created VID: ", vid);
       fetchVids();
+
+      setCurrentVid(vid);
     });
   }
 
@@ -121,7 +124,7 @@ export default function HomePage() {
           {match(mode)
             .with("home", () => (
               <div className="flex flex-col items-center gap-8">
-                <div className="flex flex-row gap-5">
+                <div className="flex flex-row gap-10">
                   <ObjectSelector
                     title="users"
                     objects={users}
@@ -152,29 +155,41 @@ export default function HomePage() {
                 />
 
                 {currentVid && (
-                  <div>
-                    <div className="flex flex-row items-center gap-2">
-                      <div>VID: </div>
-                      <div className="font-geist-mono text-xs">
-                        {currentVid.id}
-                      </div>
+                  <div className="grid grid-cols-2 gap-x-4 gap-y-3">
+                    <div className="items-center justify-self-end border-r-2 border-stone-400 pr-4">
+                      VID
+                    </div>
+                    <div className="font-geist-mono text-xs">
+                      {shortUuid(currentVid.id)}
                     </div>
 
-                    <div className="flex flex-row items-center gap-2">
-                      <div>user: </div>
-                      <div className="font-geist-mono text-xs">
+                    <div className="items-center justify-self-end border-r-2 border-stone-400 pr-4">
+                      user
+                    </div>
+                    <div>
+                      <div className="">
                         {currentVidUser === null
                           ? "unknown"
                           : currentVidUser.name}
                       </div>
+
+                      <div className="font-geist-mono text-xs">
+                        {shortUuid(currentVid.userId)}
+                      </div>
                     </div>
 
-                    <div className="flex flex-row items-center gap-2">
-                      <div>item: </div>
-                      <div className="font-geist-mono text-xs">
+                    <div className="items-center justify-self-end border-r-2 border-stone-400 pr-4">
+                      item
+                    </div>
+                    <div>
+                      <div className="">
                         {currentVidItem === null
                           ? "unknown"
                           : currentVidItem.name}
+                      </div>
+
+                      <div className="font-geist-mono text-xs">
+                        {shortUuid(currentVid.itemId)}
                       </div>
                     </div>
                   </div>

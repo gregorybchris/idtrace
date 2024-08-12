@@ -30,7 +30,7 @@ export function ObjectCreateForm({
       >
         <div className="flex flex-col gap-2">
           <TextBox value={name} onChange={setName} />
-          <div className="flex flex-row gap-2">
+          <div className="flex flex-row justify-center gap-2">
             <FormButton text="create" />
             <CancelButton onClick={onClose} />
           </div>
