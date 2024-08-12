@@ -29,7 +29,7 @@ export function CancelButton({
       )}
       onClick={handleClick}
     >
-      <XCircle size={20} />
+      <XCircle size={20} color="#e96373" weight="duotone" />
     </div>
   );
 }

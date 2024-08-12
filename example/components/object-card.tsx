@@ -17,7 +17,7 @@ export function ObjectCard({
   onDelete,
 }: ObjectCardProps) {
   return (
-    <div className="flex flex-row justify-between gap-1">
+    <div className="group flex flex-row justify-between gap-1">
       <div
         className={cn(
           "flex cursor-pointer flex-col gap-1 rounded px-3 py-2 hover:bg-stone-300",
@@ -28,7 +28,10 @@ export function ObjectCard({
         <div>{object.name}</div>
         <div className="font-geist-mono text-xs">{shortUuid(object.id)}</div>
       </div>
-      <CancelButton onClick={onDelete} className="rounded" />
+      <CancelButton
+        className="rounded opacity-0 group-hover:opacity-100"
+        onClick={onDelete}
+      />
     </div>
   );
 }

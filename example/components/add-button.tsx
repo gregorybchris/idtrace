@@ -25,7 +25,7 @@ export function AddButton({ className, onClick, enabled }: AddButtonProps) {
       )}
       onClick={handleClick}
     >
-      <PlusCircle size={20} />
+      <PlusCircle size={20} color="#505050" weight="duotone" />
     </div>
   );
 }
